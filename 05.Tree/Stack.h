@@ -19,7 +19,7 @@ public:
 		_size--;
 		return data[_size];
 	}
-	bool empty(){
+	bool empty() {
 		return !_size;
 	}
 };
