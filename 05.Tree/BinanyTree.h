@@ -33,7 +33,7 @@ public:
 		updateHeightAbove(x);
 		return x->Rchild;
 	}
-	void visit_pos() {
+	void visit_pre(){	//先序遍历
 		Node(T) root = _root;
 		stack<Node(T)> s;
 		while (true) {
@@ -43,9 +43,45 @@ public:
 					s.push(root->Rchild);
 				root = root->Lchild;
 			}
-			if (!s.empty())
+			if (s.empty())
 				break;
 			root = s.pop();
+		}
+	}
+	void visit_in(){	//中序遍历
+		stack<Node(T)> s;
+		Node(T) root = _root;
+		while(true){
+			while(root){
+				s.push(root);
+				root = root->Lchild;
+			}
+			if(s.empty())
+				break;
+			root = s.pop();
+			std::cout << root->data;
+			root = root->Rchild;
+		}
+	}
+	void visit_pos(){
+		stack<Node(T)> s;
+		Node(T) root = _root;
+		s.push(root);
+		while(!s.empty()){
+			if(s.top()!=root->parent){	//如果不是父节点，则为其右兄弟，需要先遍历其右兄弟，再回到父节点
+				while(Node(T)cur = s.top()){
+					if(cur->Lchild){
+						if(cur->Rchild)
+							s.push(cur->Rchild);
+						s.push(cur->Lchild);
+					}else{
+						s.push(cur->Rchild);
+					}
+				}
+				s.pop();
+			}
+			root = s.pop();
+			std::cout << root->data;
 		}
 	}
 };

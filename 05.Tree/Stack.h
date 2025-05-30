@@ -20,6 +20,6 @@ public:
 		return data[_size];
 	}
 	bool empty(){
-		return _size;
+		return !_size;
 	}
 };
