@@ -10,5 +10,7 @@ int main() {
 	Node(int) root3 = tree3.insertAsRoot(5);
 	tree.insertAsLeftTree(tree2, root1->Lchild);
 	tree.insertAsRightTree(tree3, root1->Lchild);
-	tree.visit_pre();
+	tree.visit_pos();
+	tree.visit_pos_2();
+
 }

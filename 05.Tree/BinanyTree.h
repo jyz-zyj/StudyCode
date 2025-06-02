@@ -81,8 +81,30 @@ public:
 				s.pop();
 			}
 			root = s.pop();
-			std::cout << root->data;
+			std::cout << root->data << ' ';
 		}
+		std::cout << std::endl;
+	}
+	void visit_pos_2(){
+		stack<Node(T)> s1,s2;
+		Node(T) root = _root;
+		while(true){
+			while(root){
+				s2.push(root);
+				if(root->Lchild){
+					s1.push(root->Lchild);
+				}
+				root = root->Rchild;
+			}
+			if(s1.empty())
+				break;
+			root = s1.pop();
+		}
+		while(!s2.empty()){
+			root = s2.pop();
+			std::cout << root->data << ' ';
+		}
+		std::cout << std::endl;
 	}
 	void insertAsLeftTree(BinTree<T>& y, Node(T) x) {
 		x->Lchild = y._root;
