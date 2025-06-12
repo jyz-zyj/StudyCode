@@ -1,0 +1,603 @@
+/* 重置与全局样式 */
+:root {
+    --spring-green-light: #d4eed1;
+    --spring-green-medium: #8bc34a;
+    --spring-green-dark: #2c8219;
+    --summer-orange-light: #ffd8b1;
+    --summer-orange-medium: #ff9800;
+    --summer-orange-dark: #d86b08;
+    --autumn-brown-light: #f7e4c3;
+    --autumn-brown-medium: #e9b970;
+    --autumn-brown-dark: #a35c07;
+    --winter-blue-light: #e1f3ff;
+    --winter-blue-medium: #a6d5f9;
+    --winter-blue-dark: #1a6bb9;
+    --gold: #d4af37;
+    --ink-dark: #333;
+    --white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Serif SC', 'Microsoft YaHei', serif;
+}
+
+body {
+    min-height: 100vh;
+    transition: all 0.5s ease;
+    background-attachment: fixed;
+    color: var(--ink-dark);
+}
+
+/* 季节特定背景和色彩 */
+body.spring {
+    background: linear-gradient(135deg, var(--spring-green-light) 0%, #a8e4a0 100%);
+    color: #2c532a;
+}
+
+body.summer {
+    background: linear-gradient(135deg, var(--summer-orange-light) 0%, #ff9a5c 100%);
+    color: #7a1d0a;
+}
+
+body.autumn {
+    background: linear-gradient(135deg, var(--autumn-brown-light) 0%, #e9b970 100%);
+    color: #5a3c1a;
+}
+
+body.winter {
+    background: linear-gradient(135deg, var(--winter-blue-light) 0%, #a6d5f9 100%);
+    color: #1a3d59;
+}
+
+body.index-page {
+    background: linear-gradient(135deg, #0d324d, #7f5a83);
+    color: var(--white);
+}
+
+/* 容器和整体布局 */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 顶部导航 */
+.header {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+body.index-page .header {
+    background: rgba(0, 0, 0, 0.7);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.logo {
+    font-size: 32px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-family: 'Ma Shan Zheng', cursive;
+}
+
+/* Logo颜色 */
+body.index-page .logo { color: var(--gold); }
+body.spring .logo { color: var(--spring-green-dark); }
+body.summer .logo { color: var(--summer-orange-dark); }
+body.autumn .logo { color: var(--autumn-brown-dark); }
+body.winter .logo { color: var(--winter-blue-dark); }
+
+.logo i {
+    font-size: 36px;
+    transition: transform 0.3s;
+}
+
+.logo:hover i {
+    transform: rotate(360deg);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    font-size: 18px;
+    position: relative;
+    padding: 5px 0;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+/* 导航链接颜色 */
+body.index-page .nav-menu a { color: var(--white); }
+body.spring .nav-menu a { color: var(--spring-green-dark); }
+body.summer .nav-menu a { color: var(--summer-orange-dark); }
+body.autumn .nav-menu a { color: var(--autumn-brown-dark); }
+body.winter .nav-menu a { color: var(--winter-blue-dark); }
+
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    transition: width 0.3s;
+}
+
+/* 导航下划线颜色 */
+body.index-page .nav-menu a::after { background: var(--gold); }
+body.spring .nav-menu a::after { background: var(--spring-green-dark); }
+body.summer .nav-menu a::after { background: var(--summer-orange-dark); }
+body.autumn .nav-menu a::after { background: var(--autumn-brown-dark); }
+body.winter .nav-menu a::after { background: var(--winter-blue-dark); }
+
+.nav-menu a:hover, .nav-menu a.active {
+    transform: translateY(-3px);
+}
+
+.nav-menu a:hover::after, .nav-menu a.active::after {
+    width: 100%;
+}
+
+/* 主内容区 */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hero {
+    text-align: center;
+    padding: 60px 0 40px;
+    animation: fadeIn 1s ease-out;
+}
+
+body.index-page .hero h1 {
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    position: relative;
+    display: inline-block;
+    font-family: 'Ma Shan Zheng', cursive;
+}
+
+.hero h1::after {
+    content: "";
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    border-radius: 3px;
+}
+
+/* 首页标题下划线颜色 */
+body.index-page .hero h1::after { background: var(--gold); }
+
+/* 季节页面标题下划线颜色 */
+body.spring .hero h1::after { background: var(--spring-green-dark); }
+body.summer .hero h1::after { background: var(--summer-orange-dark); }
+body.autumn .hero h1::after { background: var(--autumn-brown-dark); }
+body.winter .hero h1::after { background: var(--winter-blue-dark); }
+
+.hero p {
+    font-size: 20px;
+    max-width: 800px;
+    margin: 30px auto 40px;
+    animation: fadeIn 1.5s ease-out;
+    line-height: 1.8;
+}
+
+/* 季节卡片（在首页） */
+.season-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin: 50px 0;
+    animation: fadeIn 2s ease-out;
+}
+
+.season-card {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 15px;
+    padding: 40px 30px;
+    text-align: center;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+}
+
+body.index-page .season-card {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* 季节卡片悬停效果 */
+.season-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* 季节卡片边框色 */
+body.spring .season-card { border: 3px solid var(--spring-green-medium); }
+body.summer .season-card { border: 3px solid var(--summer-orange-medium); }
+body.autumn .season-card { border: 3px solid var(--autumn-brown-medium); }
+body.winter .season-card { border: 3px solid var(--winter-blue-medium); }
+
+.season-icon {
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+/* 季节卡片图标颜色 */
+.spring .season-icon { color: var(--spring-green-dark); }
+.summer .season-icon { color: var(--summer-orange-dark); }
+.autumn .season-icon { color: var(--autumn-brown-dark); }
+.winter .season-icon { color: var(--winter-blue-dark); }
+
+.season-card h3 {
+    font-size: 26px;
+    margin-bottom: 15px;
+    position: relative;
+    font-family: 'Ma Shan Zheng', cursive;
+}
+
+.season-card h3::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+}
+
+.spring .season-card h3::after { background: var(--spring-green-dark); }
+.summer .season-card h3::after { background: var(--summer-orange-dark); }
+.autumn .season-card h3::after { background: var(--autumn-brown-dark); }
+.winter .season-card h3::after { background: var(--winter-blue-dark); }
+
+.season-card p {
+    font-size: 17px;
+    line-height: 1.6;
+    margin-top: 20px;
+    animation: fadeIn 2s ease-out;
+    padding: 0 20px;
+}
+
+/* 节气网格（在季节页面） */
+.solar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin: 60px 0;
+    animation: fadeIn 1s ease-out;
+}
+
+.solar-card {
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+}
+
+.solar-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.solar-img-container {
+    height: 350px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.solar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.solar-card:hover .solar-img {
+    transform: scale(1.08);
+}
+
+.solar-img-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(to top, rgba(255,255,255,0.7), transparent);
+    z-index: 1;
+}
+
+.solar-card-content {
+    padding: 25px;
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.solar-card h4 {
+    font-size: 26px;
+    margin: 0 0 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Ma Shan Zheng', cursive;
+}
+
+body.spring .solar-card h4 { color: var(--spring-green-dark); }
+body.summer .solar-card h4 { color: var(--summer-orange-dark); }
+body.autumn .solar-card h4 { color: var(--autumn-brown-dark); }
+body.winter .solar-card h4 { color: var(--winter-blue-dark); }
+
+.solar-card h4 i {
+    font-size: 28px;
+}
+
+.season-badge {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    color: white;
+    border-radius: 30px;
+    padding: 8px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    z-index: 2;
+    font-family: 'Ma Shan Zheng', cursive;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* 节气徽章颜色 */
+body.spring .season-badge { 
+    background: linear-gradient(to right, var(--spring-green-medium), var(--spring-green-dark));
+}
+body.summer .season-badge { 
+    background: linear-gradient(to right, var(--summer-orange-medium), var(--summer-orange-dark));
+}
+body.autumn .season-badge { 
+    background: linear-gradient(to right, var(--autumn-brown-medium), var(--autumn-brown-dark));
+}
+body.winter .season-badge { 
+    background: linear-gradient(to right, var(--winter-blue-medium), var(--winter-blue-dark));
+}
+
+.solar-card p {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-top: auto;
+    color: #555;
+    animation: fadeIn 1.5s ease-out;
+}
+
+/* 装饰图标 */
+.decoration-icons {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 12px;
+    z-index: 2;
+}
+
+.decoration-icons i {
+    font-size: 22px;
+    opacity: 0.7;
+}
+
+/* 返回按钮 */
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 20px 0 40px;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 12px 30px;
+    border-radius: 30px;
+    transition: all 0.3s;
+    font-family: 'Ma Shan Zheng', cursive;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    font-weight: bold;
+    cursor: pointer;
+    background: var(--white);
+    border: 2px solid;
+}
+
+body.spring .back-btn { 
+    color: var(--spring-green-dark);
+    border-color: var(--spring-green-medium);
+}
+body.summer .back-btn { 
+    color: var(--summer-orange-dark);
+    border-color: var(--summer-orange-medium);
+}
+body.autumn .back-btn { 
+    color: var(--autumn-brown-dark);
+    border-color: var(--autumn-brown-medium);
+}
+body.winter .back-btn { 
+    color: var(--winter-blue-dark);
+    border-color: var(--winter-blue-medium);
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateX(-10px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* 页脚 */
+.footer {
+    margin-top: 80px;
+    padding: 40px 0;
+    text-align: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    animation: fadeIn 2s ease-out;
+    position: relative;
+    font-size: 15px;
+}
+
+/* 页脚顶部装饰线 */
+body.spring .footer { 
+    border-top: 3px solid var(--spring-green-medium);
+}
+body.summer .footer { 
+    border-top: 3px solid var(--summer-orange-medium);
+}
+body.autumn .footer { 
+    border-top: 3px solid var(--autumn-brown-medium);
+}
+body.winter .footer { 
+    border-top: 3px solid var(--winter-blue-medium);
+}
+
+/* 首页页脚样式 */
+body.index-page .footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #aaa;
+}
+
+.footer p {
+    margin-bottom: 10px;
+}
+
+/* 响应式调整 */
+@media (max-width: 1200px) {
+    .solar-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+    
+    .solar-card {
+        height: 500px;
+    }
+    
+    .solar-img-container {
+        height: 320px;
+    }
+}
+
+@media (max-width: 992px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .season-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .season-card {
+        padding: 30px 20px;
+    }
+    
+    .solar-card {
+        height: 480px;
+    }
+    
+    .solar-img-container {
+        height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 38px;
+    }
+    
+    .hero p {
+        font-size: 18px;
+    }
+    
+    .solar-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .nav-menu {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .header {
+        padding: 10px 0;
+    }
+    
+    .solar-card {
+        height: auto;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    
+    .solar-img-container {
+        height: 350px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .logo {
+        font-size: 28px;
+    }
+    
+    .back-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+    
+    .hero h1 {
+        font-size: 32px;
+    }
+    
+    .solar-img-container {
+        height: 300px;
+    }
+}

@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二十四节气 - 中国传统智慧</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --spring-color: #99cc66;
+            --summer-color: #ff9900;
+            --autumn-color: #cc9966;
+            --winter-color: #6699cc;
+            --gold: #d4af37;
+            --dark-bg: #1a1a1a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'SimSun', serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #000428, #004e92);
+            color: #fff;
+            min-height: 100vh;
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 顶部导航 */
+        .header {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        
+        .logo i {
+            font-size: 32px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        .nav-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s;
+        }
+        
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+        
+        .nav-menu a:hover, .nav-menu a.active {
+            color: var(--gold);
+        }
+        
+        .nav-menu a:hover::after, .nav-menu a.active::after {
+            width: 100%;
+        }
+        
+        /* 主内容区 */
+        .page {
+            display: none;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 主页 */
+        .hero {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .hero h1::after {
+            content: "";
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--gold);
+            border-radius: 3px;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 800px;
+            margin: 30px auto 40px;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+        
+        /* 季节选择 */
+        .season-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 25px;
+            margin: 50px 0;
+        }
+        
+        .season-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.4s, box-shadow 0.4s, background 0.4s;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+        }
+        
+        .season-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .season-card.spring:hover {
+            background: rgba(153, 204, 102, 0.15);
+        }
+        
+        .season-card.summer:hover {
+            background: rgba(255, 153, 0, 0.15);
+        }
+        
+        .season-card.autumn:hover {
+            background: rgba(204, 153, 102, 0.15);
+        }
+        
+        .season-card.winter:hover {
+            background: rgba(102, 153, 204, 0.15);
+        }
+        
+        .season-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+        }
+        
+        .spring::before {
+            background: var(--spring-color);
+        }
+        
+        .summer::before {
+            background: var(--summer-color);
+        }
+        
+        .autumn::before {
+            background: var(--autumn-color);
+        }
+        
+        .winter::before {
+            background: var(--winter-color);
+        }
+        
+        .season-card h3 {
+            font-size: 26px;
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .season-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 2px;
+            background: var(--gold);
+        }
+        
+        .season-card p {
+            color: #c0c0c0;
+            line-height: 1.6;
+            margin-top: 20px;
+        }
+        
+        .season-card i {
+            font-size: 60px;
+        }
+        
+        .spring i { color: var(--spring-color); }
+        .summer i { color: var(--summer-color); }
+        .autumn i { color: var(--autumn-color); }
+        .winter i { color: var(--winter-color); }
+        
+        /* 节气网格 */
+        .solar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+            margin: 50px 0;
+        }
+        
+        .solar-card {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 20px;
+            transition: transform 0.3s, background 0.3s;
+            backdrop-filter: blur(5px);
+        }
+        
+        .solar-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .solar-card h4 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .solar-card h4::before {
+            content: '•';
+            color: var(--gold);
+        }
+        
+        .solar-card p {
+            line-height: 1.6;
+            color: #d0d0d0;
+        }
+        
+        /* 页脚 */
+        .footer {
+            margin-top: 80px;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer p {
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+        
+        /* 返回按钮 */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 30px 0;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 18px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: background 0.3s;
+        }
+        
+        .back-btn:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        /* 季节页面标题 */
+        .season-title {
+            text-align: center;
+            padding: 40px 0;
+            position: relative;
+        }
+        
+        .season-title h2 {
+            font-size: 42px;
+            display: inline-block;
+            padding: 0 20px;
+        }
+        
+        .season-title h2::before, .season-title h2::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 150px;
+            height: 2px;
+            background: var(--gold);
+        }
+        
+        .season-title h2::before {
+            left: 0;
+        }
+        
+        .season-title h2::after {
+            right: 0;
+        }
+        
+        .spring .season-title h2 { color: var(--spring-color); }
+        .summer .season-title h2 { color: var(--summer-color); }
+        .autumn .season-title h2 { color: var(--autumn-color); }
+        .winter .season-title h2 { color: var(--winter-color); }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .season-title h2 {
+                font-size: 32px;
+            }
+            
+            .season-title h2::before, 
+            .season-title h2::after {
+                width: 80px;
+            }
+            
+            .nav-menu {
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .season-title h2::before, 
+            .season-title h2::after {
+                width: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="#" class="logo" onclick="showPage('home')">
+                    <i class="fas fa-leaf"></i>
+                    <span>二十四节气</span>
+                </a>
+                
+                <ul class="nav-menu">
+                    <li><a href="#" class="active" onclick="showPage('home')">首页</a></li>
+                    <li><a href="#" onclick="showPage('spring')">春</a></li>
+                    <li><a href="#" onclick="showPage('summer')">夏</a></li>
+                    <li><a href="#" onclick="showPage('autumn')">秋</a></li>
+                    <li><a href="#" onclick="showPage('winter')">冬</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- 首页 -->
+        <section id="home" class="page active">
+            <div class="hero">
+                <h1>二十四节气</h1>
+                <p>中国古人通过观察太阳周年运动，认知一年中时令、气候、物候等方面变化规律所形成的知识体系和社会实践，是中华民族宝贵的传统文化遗产，蕴含悠久的文化内涵和历史积淀。</p>
+            </div>
+            
+            <div class="season-cards">
+                <div class="season-card spring" onclick="showPage('spring')">
+                    <i class="fas fa-tree"></i>
+                    <h3>春季节气</h3>
+                    <p>春是生命复苏的季节，包含立春、雨水、惊蛰、春分、清明、谷雨六个节气，象征着万物复苏、生机勃勃。</p>
+                </div>
+                
+                <div class="season-card summer" onclick="showPage('summer')">
+                    <i class="fas fa-sun"></i>
+                    <h3>夏季节气</h3>
+                    <p>夏是生长繁茂的季节，包含立夏、小满、芒种、夏至、小暑、大暑六个节气，代表着阳光普照、万物生长。</p>
+                </div>
+                
+                <div class="season-card autumn" onclick="showPage('autumn')">
+                    <i class="fas fa-wind"></i>
+                    <h3>秋季节气</h3>
+                    <p>秋是收获的季节，包含立秋、处暑、白露、秋分、寒露、霜降六个节气，象征着丰收和成熟。</p>
+                </div>
+                
+                <div class="season-card winter" onclick="showPage('winter')">
+                    <i class="fas fa-snowflake"></i>
+                    <h3>冬季节气</h3>
+                    <p>冬是休养生息的季节，包含立冬、小雪、大雪、冬至、小寒、大寒六个节气，代表着万物蛰伏，积蓄力量。</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 春季页面 -->
+        <section id="spring" class="page spring">
+            <a href="#" class="back-btn" onclick="showPage('home')">
+                <i class="fas fa-arrow-left"></i> 返回首页
+            </a>
+            
+            <div class="season-title">
+                <h2>春季节气</h2>
+            </div>
+            
+            <div class="solar-grid">
+                <div class="solar-card">
+                    <h4>立春</h4>
+                    <p>二十四节气之首，表示春季的开始，一般在公历2月3-5日。民间有"打春"、"咬春"的习俗，象征万物复苏。</p>
+                </div>
+                
+                <div class="solar-card">
+                    <h4>雨水</h4>
+                    <p>雨水节气前后，降水量开始增加，滋润草木。此时天气回暖，降雨增多，是农耕的重要时节。</p>
+                </div>
+                
+                <div class="solar-card">
+                    <h4>惊蛰</h4>
+                    <p>春雷始鸣，惊醒蛰伏于地下冬眠的昆虫。此时气温回升较快，渐有春雷，我国大部分地区进入春耕季节。</p>
+                </div>
+                
+                <div class="solar-card">
+                    <h4>春分</h4>
+                    <p>太阳位于黄经0°，昼夜几乎等长。春分过后，太阳直射位置继续由赤道向北半球推移，北半球开始昼长夜短。</p>
+                </div>
+                
+                <div class="solar-card">
+                    <h4>清明</h4>
+                    <p>既是节气又是传统节日，有踏青、扫墓的习俗。此时气候清新温暖，草木开始繁茂生长。</p>
+                </div>
+                
+                <div class="solar-card">
+                    <h4>谷雨</h4>
+                    <p>春季最后一个节气，降雨明显增多，雨生百谷。此时是谷物生长的关键时期，也有"雨前茶"、"牡丹花"等时令特点。</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 夏季页面 -->
+        <section id="summer" class="page summer">
+            <a href="#" class="back-btn" onclick="showPage('home')">
+                <i class="fas fa-arrow-left"></i> 返回首页
+            </a>
+            
+            <div class="season-title">
+                <h2>夏季节气</h2>
+            </div>
+            
+            <div class="solar-grid">
+                <div class="solar-card">
+                    <h4>立夏</h4>
+                    <p>夏季的第一个节气，表示夏天的开始。此时气温明显升高，雷雨增多，农作物进入旺盛生长阶段。</p>
+                </div>
+                
+                <div class="solar-card">
+                    <h4>小满</h4>
+                    <p>北方麦类等夏熟作物籽粒已开始饱满，但还没有完全成熟，所以称为"小满"。南方则是雨水盈缺的转折期。</p>
+                </div>
+                
+                <div class="solar-card">
+                    <h4>芒种</h4>
+                    <p>芒种是谷物成熟、夏种开始的时节。"芒"指麦类等有芒作物成熟，"种"表示谷黍类作物播种。</p>
+                </div>
+                
+                <div class="solar-card">
+                    <h4>夏至</h4>
+                    <p>一年中白昼最长、夜晚最短的一天。夏至到来意味着炎热天气正式开始，民间有吃面条的习俗。</p>
+                </div>
+                
+                <div class="solar-card">
+                    <h4>小暑</h4>
+                    <p>暑即炎热，小暑指天气开始炎热，但还没到最热的时候。此时江淮流域梅雨将结束，长江中下游常出现伏旱。</p>
+                </div>
+                
+                <div class="solar-card">
+                    <h4>大暑</h4>
+                    <p>一年中最热的时期。此时高温少雨，农作物生长旺盛，需水量很大。民间有"饮伏茶"、"晒伏姜"等习俗。</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 秋季页面 -->
+        <section id="autumn" class="page autumn">
+            <a href="#" class="back-btn" onclick="showPage('home')">
+                <i class="fas fa-arrow-left"></i> 返回首页
+            </a>
+            
+            <div class="season-title">
+                <h2>秋季节气</h2>
+            </div>
+            
+            <div class="solar-grid">
+                <div class="solar-card">
+                    <h4>立秋</h4>
+                    <p>秋季的开始，但天气依旧炎热，有"秋老虎"之说。此时禾谷开始成熟，民间有"啃秋"、"贴秋膘"的习俗。</p>
+                </div>
+                
+                <div class="solar-card">
+                    <h4>处暑</h4>
+                    <p>"处"有终止、躲藏的意思，表示炎热即将过去。此时暑气逐渐消退，秋高气爽的天气开始出现。</p>
+                </div>
+                
+                <div class="solar-card">
+                    <h4>白露</h4>
+                    <p>天气逐渐转凉，清晨的露水增多，在草叶上凝结成晶莹的露珠，呈现出"白露"的景象，故称白露。</p>
+                </div>
+                
+                <div class="solar-card">
+                    <h4>秋分</h4>
+                    <p>太阳再次直射赤道，昼夜等长。秋分过后，北半球开始昼短夜长，气温逐日下降。我国古代有"祭月"的传统。</p>
+                </div>
+                
+                <div class="solar-card">
+                    <h4>寒露</h4>
+                    <p>气温较白露时更低，露水更多，日带寒意。此时南方秋意渐浓，气爽风凉；北方已呈深秋景象。</p>
+                </div>
+                
+                <div class="solar-card">
+                    <h4>霜降</h4>
+                    <p>秋季的最后一个节气，天气渐冷、初霜出现。此时北方大部分地区已经秋收扫尾，南方则是"三秋"大忙季节。</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 冬季页面 -->
+        <section id="winter" class="page winter">
+            <a href="#" class="back-btn" onclick="showPage('home')">
+                <i class="fas fa-arrow-left"></i> 返回首页
+            </a>
+            
+            <div class="season-title">
+                <h2>冬季节气</h2>
+            </div>
+            
+            <div class="solar-grid">
+                <div class="solar-card">
+                    <h4>立冬</h4>
+                    <p>冬季的开始。立冬过后，日照时间将继续缩短，天气渐冷。民间有吃饺子、冬泳等习俗。</p>
+                </div>
+                
+                <div class="solar-card">
+                    <h4>小雪</h4>
+                    <p>寒潮和强冷空气活动频繁，北方开始降雪但雪量不大，故称小雪。南方也开始进入冬季。</p>
+                </div>
+                
+                <div class="solar-card">
+                    <h4>大雪</h4>
+                    <p>天气更冷，降雪可能性增大，且雪量增多。此时是观赏雾凇、滑雪的好时机。</p>
+                </div>
+                
+                <div class="solar-card">
+                    <h4>冬至</h4>
+                    <p>一年中白昼最短、夜晚最长的一天。冬至过后，白昼逐渐变长。民间有"冬至大如年"的说法，南方吃汤圆，北方吃饺子。</p>
+                </div>
+                
+                <div class="solar-card">
+                    <h4>小寒</h4>
+                    <p>"冷气积久而寒"，小寒意味着天气寒冷但还未到达极点的意思。中国北方进入"冰上走"的三九寒天。</p>
+                </div>
+                
+                <div class="solar-card">
+                    <h4>大寒</h4>
+                    <p>二十四节气的最后一个节气，也是冬季的第六个节气，表示天气寒冷到极致。大寒过去，迎来新的节气轮回。</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>中华传统文化瑰宝 · 二十四节气</p>
+            <p>根据太阳在黄道上的位置变化制定，反映自然节律变化</p>
+            <p>© 2023 二十四节气文化网 | 传承千年智慧</p>
+        </div>
+    </footer>
+    
+    <script>
+        // 显示特定页面并隐藏其他页面
+        function showPage(pageId) {
+            // 隐藏所有页面
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // 显示指定页面
+            document.getElementById(pageId).classList.add('active');
+            
+            // 更新导航栏激活状态
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // 设置首页为默认激活状态，除非点击的是季节链接
+            if(pageId !== 'home') {
+                document.querySelector(`.nav-menu a[onclick="showPage('${pageId}')"]`).classList.add('active');
+            } else {
+                document.querySelector('.nav-menu a:first-child').classList.add('active');
+            }
+            
+            // 滚动到顶部
+            window.scrollTo(0, 0);
+        }
+        
+        // 处理页面初始状态
+        window.onload = function() {
+            // 默认显示首页
+            document.querySelector('.page').classList.add('active');
+        }
+    </script>
+</body>
+</html>
